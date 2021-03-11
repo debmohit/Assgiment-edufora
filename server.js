@@ -4,8 +4,8 @@ const express = require('express');
 const cors = require('cors');
 // use routes
 const routes = require('./routes');
-const { initUser } = require('./services/bot');
-const { mongoUrl, port} = require('./utils/config');
+const { initUser, createTweet } = require('./services/bot');
+const { mongoUrl, port, tweetInterval } = require('./utils/config');
 const connectMongo = require('./utils/connectMongo')
 
 const app = express();
@@ -18,12 +18,15 @@ app.use(express.urlencoded({ extended: false }))
 // parse application/json
 app.use(express.json())
 
-app.use('/api',routes)
+app.use('/api', routes)
 
-connectMongo(mongoUrl).then(async() => {
-  await initUser();
-  app.listen(port, () => {
-    console.log(`server listening on ${port}`)
-  })
+connectMongo(mongoUrl).then(async () => {
+    await initUser();
+    //It tweets in every 30 minutes
+    setInterval(createTweet, tweetInterval);
+
+    app.listen(port, () => {
+        console.log(`server listening on ${port}`)
+    })
 })
 

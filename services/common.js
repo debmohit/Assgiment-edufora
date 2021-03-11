@@ -42,16 +42,27 @@ async function addTweetToDb(tweet) {
 
 async function latestTweet() {
     try {
-     let tweet = await tweetsModel.find().sort({created_at: -1}).limit(1);
-     return tweet;
+        let tweet = await tweetsModel.find().sort({ created_at: -1 }).limit(1);
+        return tweet;
     } catch (e) {
-       console.log(e);
-       throw e; 
+        console.log(e);
+        throw e;
+    }
+}
+
+async function getRandomFollower() {
+    try {
+        let user = await userModel.aggregate([{ $match: { type: "FOLLOWING" } }]).sample(1);
+        return user;
+    } catch (e) {
+        console.log(e);
+        throw e;
     }
 }
 
 module.exports = {
     addUserTooDb,
     addTweetToDb,
-    latestTweet
+    latestTweet,
+    getRandomFollower
 }

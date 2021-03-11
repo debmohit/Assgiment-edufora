@@ -9,4 +9,5 @@ module.exports = {
     getFollowers: async (params={}) => await client.get(`followers/list`,params),
     getUserTimeLine: async (params={}) => await client.get(`statuses/user_timeline`,params),
     follow: async (params ={}) => await client.post('friendships/create', params),
+    tweet: async (params= {}) => await client.post('statuses/update', params),
 }
