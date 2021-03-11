@@ -67,4 +67,7 @@ Note:- Install Mongo db If not installed, Otherwise add db connection string in 
 
 ```
 
+ ## Deployed Services ##
+  <a href="https://assignment-edfora.herokuapp.com">https://assignment-edfora.herokuapp.com</a>
+
 <a href="#top">Back to top</a>
