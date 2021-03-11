@@ -60,9 +60,20 @@ async function getRandomFollower() {
     }
 }
 
+async function getAllTweets() {
+    try {
+        let tweets = await tweetsModel.find({},{'_id':0, '__v':0});
+        return tweets;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 module.exports = {
     addUserTooDb,
     addTweetToDb,
     latestTweet,
-    getRandomFollower
+    getRandomFollower,
+    getAllTweets
 }

@@ -21,6 +21,7 @@ app.use(express.json())
 app.use('/api', routes)
 
 connectMongo(mongoUrl).then(async () => {
+    //Expecting this is only used by user who created the app in twitter developer
     await initUser();
     //It tweets in every 30 minutes
     setInterval(createTweet, tweetInterval);
