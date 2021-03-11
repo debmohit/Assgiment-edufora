@@ -16,7 +16,42 @@ async function addUserTooDb(user) {
     }
 }
 
+async function addTweetToDb(tweet) {
+    try {
+        let { id_str: tweetid, text, user, created_at, retweet_count } = tweet
+        if (!tweetid || !user.id_str) {
+            console.log("Missing tweet or user id")
+            return
+        }
+
+        let istweetExists = await tweetsModel.findOne({ tweetid })
+        if (istweetExists) return
+        await new tweetsModel({
+            tweetid,
+            userid: user.id_str,
+            text,
+            created_at,
+            retweet_count
+        }).save()
+    } catch (e) {
+        console.log(e)
+        throw e;
+    }
+
+}
+
+async function latestTweet() {
+    try {
+     let tweet = await tweetsModel.find().sort({created_at: -1}).limit(1);
+     return tweet;
+    } catch (e) {
+       console.log(e);
+       throw e; 
+    }
+}
 
 module.exports = {
     addUserTooDb,
+    addTweetToDb,
+    latestTweet
 }

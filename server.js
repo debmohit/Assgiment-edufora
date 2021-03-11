@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 // use routes
-// const routes = require('./routes');
+const routes = require('./routes');
 const { initUser } = require('./services/bot');
 const { mongoUrl, port} = require('./utils/config');
 const connectMongo = require('./utils/connectMongo')
@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-// app.use('/api',routes)
+app.use('/api',routes)
 
 connectMongo(mongoUrl).then(async() => {
   await initUser();
