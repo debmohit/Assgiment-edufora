@@ -65,4 +65,12 @@ router.get('/tweets', async (req, res) => {
     }
 })
 
+const invalidUrlResponse = (req, res) => {
+    return handleResponse(res, 404, 'Invalid URL', {})
+}
+
+router.get('*', invalidUrlResponse);
+router.post('*', invalidUrlResponse);
+router.put('*', invalidUrlResponse);
+
 module.exports = router
