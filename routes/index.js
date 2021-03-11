@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { getFollowers, getUserTimeLine } = require('../services/twitter');
+const { getFollowers, getUserTimeLine, follow } = require('../services/twitter');
 const { addTweetToDb, addUserTooDb, latestTweet } = require('../services/common');
 const { handleResponse } = require('../utils/responseHandler');
 
@@ -42,6 +42,16 @@ router.get('/recent-tweets', async (req, res) => {
 
     } catch (error) {
         return handleResponse(res, 500, '', error)
+    }
+})
+
+router.post('/follow', async (req, res) => {
+    try {
+        let response = await follow(req.body);
+        await addUserTooDb({ ...response, type: 'FOLLOWING' });
+        return handleResponse(res, 200, `You now following ${response.name}!!`)
+    } catch (error) {
+        return handleResponse(res, 500, 'error', error)
     }
 })
 

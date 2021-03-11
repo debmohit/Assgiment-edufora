@@ -6,6 +6,7 @@
  * handled using switch for now but can be handled using if with ranges
  */
 exports.handleResponse = (res, statusCode, message = 'No response found', data = null) => {
+  console.log("=====", {data});
   if (statusCode >= 200 && statusCode <= 300) {
     return res.status(statusCode).json({ success: true, message, data })
   } else if (statusCode >= 400 && statusCode <= 500) {
